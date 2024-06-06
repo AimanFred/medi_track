@@ -34,3 +34,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.yarnrc.yml
+yarn.lock
+.yarn
+.editorconfig
+.gitattributes
+/artifacts
+/cache
+/ignition
