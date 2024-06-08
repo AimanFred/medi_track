@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.24;
 
 contract MedicalRecord {
     uint public recordId;
@@ -64,7 +64,21 @@ contract MedicalRecord {
 
     // getter functions
 
-    function getRecord(uint _recordId) public view returns (uint, string memory, uint, string memory, string memory,string memory,string memory) {
+    function getRecord(
+        uint _recordId
+    )
+        public
+        view
+        returns (
+            uint,
+            string memory,
+            uint,
+            string memory,
+            string memory,
+            string memory,
+            string memory
+        )
+    {
         Record storage record = records[_recordId];
         return (
             record.timestamp,
@@ -76,6 +90,7 @@ contract MedicalRecord {
             record.medication
         );
     }
+
     function getRecordId() public view returns (uint) {
         return recordId;
     }
