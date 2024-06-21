@@ -5,7 +5,7 @@ async function main() {
     const accounts = await ethers.getSigners();
     const medical = await Medical.connect(accounts[0]).deploy();
     await medical.waitForDeployment();
-    const address = await medical.getAddress()
+    const address = await medical.getAddress();
     console.log("MedicalRecord contract is deployed at " + address);
 }
 main()

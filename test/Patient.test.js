@@ -38,4 +38,4 @@ describe("Patient", async () => {
             expect(await listDoctor.length).to.equal(2);
         });
     });
-})
+});

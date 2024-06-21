@@ -43,13 +43,13 @@ describe("MedicalRecord", () => {
         });
         it("The getRecord function is working", async () => {
             const [
-              timestamp,
-              name,
-              age,
-              gender,
-              diagnosis,
-              treatment,
-              medication
+                timestamp,
+                name,
+                age,
+                gender,
+                diagnosis,
+                treatment,
+                medication,
             ] = await medical.getRecord(await medical.getRecordId());
             expect(await medical.getRecordId()).to.equal(1);
             expect(timestamp).to.not.equal(0);
@@ -59,6 +59,6 @@ describe("MedicalRecord", () => {
             expect(diagnosis).to.equal("coughing, mild fever");
             expect(treatment).to.equal("consume medication, rest");
             expect(medication).to.equal("cough syrup, antibiotic");
-          });
+        });
     });
 });
