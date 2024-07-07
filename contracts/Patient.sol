@@ -5,27 +5,34 @@ pragma solidity ^0.8.24;
 contract Patient {
     mapping(address => address[]) doctors;
 
-    function addDoctor(address _doctor) public {
+    // Reload latest patient data when redeploy contract.
+
+    // Records doctor list into blockchain.
+    event UpdateDoctor(address indexed patient, address[] doctors);
+
+    function addDoctor(address _doctor) external {
         // add doctor to the patient
         doctors[msg.sender].push(_doctor);
+        emit UpdateDoctor(msg.sender, doctors[msg.sender]);
     }
 
-    function deleteDoctor(address _doctor) public {
+    function deleteDoctor(address _doctor) external {
         // delete doctor from patient
         for (uint i = 0; i < doctors[msg.sender].length; i++) {
             if (doctors[msg.sender][i] == _doctor) {
                 delete doctors[msg.sender][i];
                 removeElement(i, msg.sender);
+                emit UpdateDoctor(msg.sender, doctors[msg.sender]);
                 break;
             }
         }
     }
 
-    function getDoctor() public view returns (address[] memory) {
+    function getDoctor() external view returns (address[] memory) {
         return doctors[msg.sender];
     }
 
-    function getOneDoctor(uint index) public view returns (address) {
+    function getOneDoctor(uint index) external view returns (address) {
         return doctors[msg.sender][index];
     }
 
