@@ -27,15 +27,15 @@ contract Patient {
             }
         }
     }
-
+    // fetch list of doctors of the patient
     function getDoctor() external view returns (address[] memory) {
         return doctors[msg.sender];
     }
-
+    
     function getOneDoctor(uint index) external view returns (address) {
         return doctors[msg.sender][index];
     }
-
+    // rearrange elements in the array and delete the last element.
     function removeElement(uint _index, address _patient) private {
         require(_index < doctors[_patient].length, "index out of bound");
 
