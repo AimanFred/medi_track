@@ -2,10 +2,11 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("MedicalRecord", () => {
-    let medical, user, transactionResponse, transactionReceipt;
+    let medical, user, patientAdd, transactionResponse, transactionReceipt;
     beforeEach(async () => {
         const account = await ethers.getSigners();
         user = account[1];
+        patientAdd = account[2];
         const Medical = await ethers.getContractFactory("MedicalRecord");
         medical = await Medical.deploy();
     });
@@ -19,12 +20,8 @@ describe("MedicalRecord", () => {
             transactionResponse = await medical
                 .connect(user)
                 .addRecord(
-                    "fred",
-                    20,
-                    "male",
-                    "coughing, mild fever",
-                    "consume medication, rest",
-                    "cough syrup, antibiotic"
+                    patientAdd,
+                    "bafkreibm6jg3ux5qumhcn2b3flc3tyu6dmlb4xa7u5bf44yegnrjhc4yeq"
                 );
 
             transactionReceipt = await transactionResponse.wait();
@@ -34,31 +31,19 @@ describe("MedicalRecord", () => {
             expect(event.fragment.name).to.equal("MedicalRecord__AddRecord");
             const args = event.args;
             expect(args.timestamp).to.not.equal(0);
-            expect(args.name).to.equal("fred");
-            expect(args.age).to.equal(20);
-            expect(args.gender).to.equal("male");
-            expect(args.diagnosis).to.equal("coughing, mild fever");
-            expect(args.treatment).to.equal("consume medication, rest");
-            expect(args.medication).to.equal("cough syrup, antibiotic");
+            expect(args.patient).to.equal(patientAdd);
+            expect(args.recordHash).to.equal("bafkreibm6jg3ux5qumhcn2b3flc3tyu6dmlb4xa7u5bf44yegnrjhc4yeq");
         });
         it("The getRecord function is working", async () => {
             const [
                 timestamp,
-                name,
-                age,
-                gender,
-                diagnosis,
-                treatment,
-                medication,
+                patient,
+                recordHash,
             ] = await medical.getRecord(await medical.getRecordId());
             expect(await medical.getRecordId()).to.equal(1);
             expect(timestamp).to.not.equal(0);
-            expect(name).to.equal("fred");
-            expect(age).to.equal(20);
-            expect(gender).to.equal("male");
-            expect(diagnosis).to.equal("coughing, mild fever");
-            expect(treatment).to.equal("consume medication, rest");
-            expect(medication).to.equal("cough syrup, antibiotic");
+            expect(patient).to.equal(patientAdd);
+            expect(recordHash).to.equal("bafkreibm6jg3ux5qumhcn2b3flc3tyu6dmlb4xa7u5bf44yegnrjhc4yeq");
         });
     });
 });
